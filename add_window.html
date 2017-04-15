@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Agregar Tablero</title>
+  </head>
+  <body>
+    <h1>Agregar Tablero</h1>
+    <form class="form" action="index.html" method="post" id="add-board-form">
+      <input type="text" name="numero" placeholder="numero" id="numero">
+      <input type="text" name="alimentaA" placeholder="Equipos/Tableros que alimenta separados por coma. ej: 'Luminarias, 1-045, Inversor' " id="alimentaA">
+      <input type="text" name="alimentadoPor" placeholder="Tablero y llave separados por ':'. ej: 1-045:3" id="alimentadoPor">
+      <label><input type="checkbox" name="archflash" value="archflash" id="archflash">¿Posee estudio de Arch Flash?</label>
+      <label><input type="checkbox" name="cortocircuito" value="cortocircuito" id="cortocircuito">¿Posee estudio de cortocircuito?</label>
+      <label><input type="checkbox" name="contrafrente" value="contrafrente" id="contrafrente">¿Posee contrafrente?</label>
+      <label><input type="checkbox" name="necesitacontrafrente" value="necesitacontrafrente" id="necesitacontrafrente">¿Es necesario el contrafrente?</label>
+      <label><input type="checkbox" name="candado" value="candado" id="candado">¿Posee candado?</label>
+      <label><input type="checkbox" name="necesitacandado" value="necesitacandado" id="necesitacandado">¿Es necesario el candado?</label>
+      <textarea name="comentarios" rows="8" cols="80" id="comentarios"></textarea>
+      <button type="submit" name="button">Guardar</button>
+      <button type="button" id="cancel">Cancel</button>
+    </form>
+    <script>
+      require('./add_window.js');
+    </script>
+  </body>
+</html>

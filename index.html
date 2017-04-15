@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sysboard</title>
+  </head>
+  <body>
+    <h1>Hola mundo</h1>
+    <table id="boards-list">
+      <thead>
+          <th>Numero</th>
+          <th>Alimenta A</th>
+          <th>Alimentado Por</th>
+          <th>Arch Flash</th>
+          <th>Cortocircuito</th>
+          <th></th>
+      </thead>
+      <tbody id="tbody">
+
+      </tbody>
+    </table>
+    <button type="button" name="button" id="agregar">add</button>
+  <script>
+    const client = require('./client.js')
+    client.getAllBoards();
+  </script>
+  </body>
+</html>
