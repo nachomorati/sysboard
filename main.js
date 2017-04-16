@@ -68,5 +68,7 @@ ipcMain.on('save-data', (event, arg) => {
       return console.log(err);
     }
     event.sender.send('save-data-reply', newDoc);
+    addWindow.close();
+    win.reload();
   });
 })
