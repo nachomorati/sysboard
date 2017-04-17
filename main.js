@@ -6,7 +6,7 @@ const Boards = require('./models/db.js');
 let win
 
 function createWindow() {
-  win = new BrowserWindow({width:800, height:600});
+  win = new BrowserWindow({width:1024, height: 600});
   win.loadURL(`file://${__dirname}/index.html`);
   win.webContents.openDevTools();
   win.on('closed', () => {
@@ -50,7 +50,7 @@ ipcMain.on('open-add-window', () => {
   });
 
   addWindow.loadURL(`file://${__dirname}/add_window.html`);
-  addWindow.webContents.openDevTools();
+  //addWindow.webContents.openDevTools();
   addWindow.on('closed', () => {
     addWindow = null;
   });
@@ -72,3 +72,29 @@ ipcMain.on('save-data', (event, arg) => {
     win.reload();
   });
 })
+
+//edit-window
+let editWindow = null;
+ipcMain.on('open-edit-window', (event, arg) => {
+  if (editWindow) {
+    return;
+  }
+  editWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    parent: win,
+    //modal: true
+  });
+
+  editWindow.loadURL(`file://${__dirname}/edit_window.html`);
+  editWindow.webContents.openDevTools();
+
+  console.log('From Main');
+  console.log(arg);
+  event.sender.send('open-edit-window-reply', arg);
+
+  editWindow.on('closed', () => {
+    editWindow = null;
+  });
+
+});

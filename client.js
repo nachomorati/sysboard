@@ -57,8 +57,24 @@ module.exports.getAllBoards = function () {
       addChild(tr, board.alimentadoPor)
       addChild(tr, board.archflash)
       addChild(tr, board.cortocircuito)
+      var editLink = document.createElement('button');
+      editLink.appendChild(document.createTextNode('Editar'))
+      editLink.id = board._id;
+      editLink.className = 'edit-link';
+      tr.appendChild(editLink);
       document.getElementById('tbody').appendChild(tr)
     })
+
+    //event listener for edit-window
+    //open the "edit-window"
+    var editLinkBtn = document.getElementsByClassName('edit-link');
+    console.log(editLinkBtn);
+    Array.from(editLinkBtn).forEach(element => {
+      element.addEventListener('click', () => {
+        ipcRenderer.send('open-edit-window', element.id);
+    });
+    }, false);
+
   })
 }
 
