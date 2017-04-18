@@ -1,6 +1,10 @@
 const {ipcRenderer} = require('electron');
 const Board = require('./models/db.js');
 
+$(document).ready(function() {
+  $('#cuadro').html('hola');
+})
+
 //having at least one doc in DB
 Board.findOne({}, (err, doc) => {
   if (err) {

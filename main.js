@@ -6,9 +6,19 @@ const Boards = require('./models/db.js');
 let win
 
 function createWindow() {
-  win = new BrowserWindow({width:1024, height: 600});
+  win = new BrowserWindow({
+    show: false,
+    width:1024,
+    height: 600,
+  });
   win.loadURL(`file://${__dirname}/index.html`);
   win.webContents.openDevTools();
+
+  win.webContents.on('did-finish-load', () => {
+    win.show();
+    win.focus();
+  });
+
   win.on('closed', () => {
     win = null;
   });
@@ -76,25 +86,30 @@ ipcMain.on('save-data', (event, arg) => {
 //edit-window
 let editWindow = null;
 ipcMain.on('open-edit-window', (event, arg) => {
-  if (editWindow) {
-    return;
-  }
-  editWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    parent: win,
-    //modal: true
+  //find board
+  Boards.findOne({_id:arg}, (err, board) => {
+    if (err) {
+      return;
+    }
+
+    if (editWindow) {
+      return;
+    }
+    editWindow = new BrowserWindow({
+      width: 800,
+      height: 600,
+      //parent: win,
+      //modal: true
+    });
+
+    editWindow.loadURL(`file://${__dirname}/edit_window.html`);
+    editWindow.webContents.openDevTools();
+    editWindow.webContents.on('did-finish-load', () => {
+      editWindow.webContents.send('open-edit-window-reply', board);
+    });
+
+    editWindow.on('closed', () => {
+      editWindow = null;
+    });
   });
-
-  editWindow.loadURL(`file://${__dirname}/edit_window.html`);
-  editWindow.webContents.openDevTools();
-
-  console.log('From Main');
-  console.log(arg);
-  event.sender.send('open-edit-window-reply', arg);
-
-  editWindow.on('closed', () => {
-    editWindow = null;
-  });
-
 });
